@@ -1,0 +1,1 @@
+from ebook_mcp.server import app

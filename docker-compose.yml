@@ -1,0 +1,19 @@
+services:
+  ebook-mcp:
+    build: .
+    container_name: ebook-mcp
+    env_file: .env
+    ports:
+      - "${PORT:-8001}:8000"
+    shm_size: "1gb"
+    depends_on:
+      - flaresolverr
+    restart: unless-stopped
+
+  # Solves the Cloudflare challenge in front of oceanofpdf.com (reached at http://flaresolverr:8191/v1)
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+    restart: unless-stopped
